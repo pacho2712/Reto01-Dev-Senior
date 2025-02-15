@@ -7,7 +7,7 @@ public class reto01 {
     static Scanner sc = new Scanner(System.in);
     static Random r = new Random();
 
-    static String[] planetas = { "Marte", "Jupiter","Neptuno" }; // Nombre del planeta de destino "plantilla - ELIMINAR AL FINAL"
+    
     static String[] planetasDestino = {"mercurio","venus","marte","jupiter","saturno","urano","neptuno"};//lista planetas de destino
     static String[] descripcionPlanetas = {"el mas pequeño del sistema solar,cercano al sol, denso y rocoso, temperaturas entre -180°c y 430°c","similar en tamaño,masa y composicion a la tierra,con volcanes activos,cubierto por una capa de nuves, temperatura media 463°c","superficie polvorienta, desertica y fria, temperatura de -65°c","el mas grande del sistema solar,no tiene superficie solida, temperatura media de -110°c","el segundo mas grande,planeta gaseoso,compuesto por hidrogeno y helio, temperatura media entre -122°c y -185°c","el mas frio del sistema solar, temperatura -224°c,un gigante de hielo sin superficie solida","el mas lejano desde el sol, compuesto por hielo y gas que le dan color azul, temperatura media -218°c"};
     
@@ -73,17 +73,17 @@ public class reto01 {
     }
 
     // Selección de planeta
-    public static void seleccionarPlaneta() {
+    public static void seleccionarPlaneta () {
         System.out.println(BOLD+BRIGHT_BLUE+UNDERLINE+"\n\tMenú Planetas y sus distancias desde la Tierra "+RESET+"\n");
-        for (int i = 0; i < planetas.length; i++) {
-            System.out.println(BOLD+BRIGHT_BLUE+(i + 1) + "). " +RESET+ planetas[i] +BLUE+BOLD+ " - Distancia: " + distancias[i] + " millones de km."+RESET);
+        for (int i = 0; i < planetasDestino.length; i++) {
+            System.out.println(BOLD+BRIGHT_BLUE+(i + 1) + "). " +RESET+ planetasDestino[i] +BLUE+BOLD+ " - Distancia: " + distancias[i] + " millones de km."+RESET);
         }
         System.out.print(BOLD+"Elige el número de tu planeta destino: "+RESET);
         var seleccion = sc.nextInt();
 
-        if (seleccion >= 1 && seleccion <= planetas.length) {
+        if (seleccion >= 1 && seleccion <= planetasDestino.length) {
             selectedPlanetIndex = seleccion - 1;
-            System.out.println(BRIGHT_GREEN+"\nHas seleccionado " + planetas[selectedPlanetIndex] + "."+RESET);
+            System.out.println(BRIGHT_GREEN+"\nHas seleccionado " + planetasDestino[selectedPlanetIndex] + "."+RESET);
             isPlanetSelected = true;
         } else {
             System.err.println(ORANGE+"Selección no válida. Por favor, intenta de nuevo."+RESET);
