@@ -10,7 +10,12 @@ public class reto01 {
     
     static String[] planetasDestino = {"mercurio","venus","marte","jupiter","saturno","urano","neptuno"};
     static String[] descripcionPlanetas = {"el mas pequeño del sistema solar,cercano al sol, denso y rocoso, temperaturas entre -180°c y 430°c","similar en tamaño,masa y composicion a la tierra,con volcanes activos,cubierto por una capa de nuves, temperatura media 463°c","superficie polvorienta, desertica y fria, temperatura de -65°c","el mas grande del sistema solar,no tiene superficie solida, temperatura media de -110°c","el segundo mas grande,planeta gaseoso,compuesto por hidrogeno y helio, temperatura media entre -122°c y -185°c","el mas frio del sistema solar, temperatura -224°c,un gigante de hielo sin superficie solida","el mas lejano desde el sol, compuesto por hielo y gas que le dan color azul, temperatura media -218°c"};
-    static double[] distancias = { 77.0, 40.0, 225.0, 778.0, 1.426, 2.870, 4.496}; // Distancia en millones de kilometros
+    static double[] distancias = { 77.0, 40.0, 225.0, 778.0, 1426.0, 2870.0, 4496.0}; // Distancia en millones de kilometros
+    static String[] tipoNave = {"alfa" , "beta", "omega"};
+    static double[] velocidadNaves = {10000.0, 12000.0,15000.0};//KM/Hora
+    static double[] necesidadCombustible = {1.0, 1.2, 1.5}; // litros combustible por KM recorrido.
+    static double[] necesidadOxigeno = {0.5, 1.0, 1.7}; // litros de oxigeno por hora.
+
 
     // Definir constantes para códigos de color
     static final String GREEN = "\033[32m"; // Verde para barra de progreso
