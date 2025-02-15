@@ -95,11 +95,42 @@ public class reto01 {
 
     // Selección de nave espacial
     public static void seleccionarNaveEspacial() {
+        var salida = false;
+
         if (!isPlanetSelected) {
             System.err.println(ORANGE + "Primero debes seleccionar un planeta destino." + RESET);
             return;
-        }
+        }else{
+            do{
+            System.out.println("\n--- Seleccione una nave espacial de la lista ---");
+            for(int i = 0; i < tipoNave.length; i++){
+                System.out.printf("Nave (%d): %s%nVelocidad: %,.2f Km/h%n%n",i+1,tipoNave[i],velocidadNaves[i]);
+            }
+            System.out.print("Elige el número de nave que necesitas: ");
+            var seleccion = sc.nextInt();
 
+            if(seleccion > 0 && seleccion <=3){
+                selectedShipIndex = seleccion -1;
+                System.out.printf("\nHas seleccionado la nave: %s%nvelocidad: %,.2f Km/h%n%n", tipoNave[selectedShipIndex], velocidadNaves[selectedShipIndex]);
+                
+                System.out.print("Presiona (1) para confirmar (2) para seleccionar otra nave: ");
+                var confirmar = sc.nextInt();
+
+                switch(confirmar){
+                    case 1:
+                        salida = true;
+                        isShipSelected = true;
+                        break;
+                    case 2:
+                        continue;
+                    default:
+                        System.out.println("Digitaste una opción inválida");    
+                }
+            }else{
+                System.out.println("Digitaste una opción inválida vuelve a intentar");
+            }
+            }while(!salida);
+        }
     }
 
     public static void calcularRecursos() {
