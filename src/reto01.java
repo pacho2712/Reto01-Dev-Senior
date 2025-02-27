@@ -37,6 +37,7 @@ public class reto01 {
     // Verificación de selección de nave y planeta
     static boolean isPlanetSelected = false; // Verifica si se ha seleccionado un planeta
     static boolean isShipSelected = false; // Verifica si se ha seleccionado una nave
+    static boolean isCalculatedResources = false; // Verifica si se calcularon los recursos
     static int selectedShipIndex = -1; // Indice de nave seleccionada
     static int selectedPlanetIndex = -1; // Indice de planeta seleccionado
 
@@ -153,11 +154,23 @@ public class reto01 {
                 System.out.println("Aún no ha seleccionado una nave, debe hacerlo antes de calcular los recursos para el viaje");
             }else{
                 System.out.printf("\nPlaneta de destino selecionado: (%s)%n",planetasDestino[selectedShipIndex]);
-                System.out.printf("Nave selecionada: (%s)",tipoNave[selectedShipIndex]);
-                System.out.printf("Distancia desde el planeta tierra: (%,.0f) millones de años",distancias[selectedShipIndex]);                
-                System.out.printf("Velocidad de la nave: (%,.0f) millones de años",velocidadNaves[selectedShipIndex]);
+                System.out.printf("Nave selecionada: (%s)%n",tipoNave[selectedShipIndex]);
+                System.out.printf("Distancia desde el planeta tierra: (%,d) millones de años%n",distancias[selectedShipIndex]);                
+                System.out.printf("Velocidad de la nave: (%,.0f) km/h%n",velocidadNaves[selectedShipIndex]);
+                System.out.print("Espere un momento estamos calculando los recursos");
                 
-                System.out.printf("Velocidad de la nave: (%,.0f) millones de años",velocidadNaves[selectedShipIndex]);
+                for(int i = 0; i<10; i++){
+                    System.out.print(".");
+                    try {
+                        Thread.sleep(500);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                System.out.printf("%nEl oxígeno requerido para el viaje es: (%,.0f) litros%n",calculoOxigeno(distancias, velocidadNaves, necesidadOxigeno, selectedShipIndex));
+                System.out.printf("El combustible requerido para el viaje es: (%,d) litros%n",calculoCombustible(distancias, necesidadCombustible, selectedShipIndex));
+                isCalculatedResources = true;
+                salir = true;
             }
         }while(!salir);
     }
