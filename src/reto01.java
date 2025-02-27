@@ -134,6 +134,23 @@ public class reto01 {
     }
 
     public static void calcularRecursos() {
+        if (!isPlanetSelected) {
+            System.err.println(ORANGE + "Primero debes seleccionar un planeta destino." + RESET);
+            return;
+        }
+        if (!isShipSelected) {
+            System.err.println(ORANGE + "Primero debes seleccionar una nave espacial." + RESET);
+            return;
+        }
+    
+        double distancia = distancias[selectedPlanetIndex];
+        double combustibleRequerido = distancia * necesidadCombustible[selectedShipIndex];
+        double oxigenoNecesario = distancia * necesidadCombustible[selectedShipIndex]; 
+    
+        System.out.println(BRIGHT_BLUE + "\nLos Recursos necesarios para el viaje inter estelar a " + planetasDestino[selectedPlanetIndex] + ":" + RESET);
+        System.out.println(BRIGHT_GREEN + "Combustible necesario: " + combustibleRequerido + " litros" + RESET);
+        System.out.println(BRIGHT_GREEN + "Oxígeno necesario: " + oxigenoNecesario + " litros" + RESET);
+    
 
     }
 
