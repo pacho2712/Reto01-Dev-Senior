@@ -7,15 +7,21 @@ public class reto01 {
     static Scanner sc = new Scanner(System.in);
     static Random r = new Random();
 
-    
-    static String[] planetasDestino = {"mercurio","venus","marte","jupiter","saturno","urano","neptuno"};
-    static String[] descripcionPlanetas = {"el mas pequeño del sistema solar,cercano al sol, denso y rocoso, temperaturas entre -180°c y 430°c","similar en tamaño,masa y composicion a la tierra,con volcanes activos,cubierto por una capa de nuves, temperatura media 463°c","superficie polvorienta, desertica y fria, temperatura de -65°c","el mas grande del sistema solar,no tiene superficie solida, temperatura media de -110°c","el segundo mas grande,planeta gaseoso,compuesto por hidrogeno y helio, temperatura media entre -122°c y -185°c","el mas frio del sistema solar, temperatura -224°c,un gigante de hielo sin superficie solida","el mas lejano desde el sol, compuesto por hielo y gas que le dan color azul, temperatura media -218°c"};
-    static double[] distancias = { 77.0, 40.0, 225.0, 778.0, 1426.0, 2870.0, 4496.0}; // Distancia en millones de kilometros
-    static String[] tipoNave = {"alfa" , "beta", "omega"};
-    static double[] velocidadNaves = {10000.0, 12000.0,15000.0};//KM/Hora
-    static double[] necesidadCombustible = {1.0, 1.2, 1.5}; // litros combustible por KM recorrido.
-    static double[] necesidadOxigeno = {0.5, 1.0, 1.7}; // litros de oxigeno por hora.
-
+    static String[] planetasDestino = { "mercurio", "venus", "marte", "jupiter", "saturno", "urano", "neptuno" };
+    static String[] descripcionPlanetas = {
+            "el mas pequeño del sistema solar,cercano al sol, denso y rocoso, temperaturas entre -180°c y 430°c",
+            "similar en tamaño,masa y composicion a la tierra,con volcanes activos,cubierto por una capa de nuves, temperatura media 463°c",
+            "superficie polvorienta, desertica y fria, temperatura de -65°c",
+            "el mas grande del sistema solar,no tiene superficie solida, temperatura media de -110°c",
+            "el segundo mas grande,planeta gaseoso,compuesto por hidrogeno y helio, temperatura media entre -122°c y -185°c",
+            "el mas frio del sistema solar, temperatura -224°c,un gigante de hielo sin superficie solida",
+            "el mas lejano desde el sol, compuesto por hielo y gas que le dan color azul, temperatura media -218°c" };
+    static long[] distancias = { 77000000L, 40000000L, 225000000L, 778000000L, 1426000000L, 2870000000L, 4496000000L }; // Distancia en millones de
+                                                                                       // kilometros
+    static String[] tipoNave = { "alfa", "beta", "omega" };
+    static double[] velocidadNaves = { 10000.0, 12000.0, 15000.0 };// KM/Hora
+    static double[] necesidadCombustible = { 1.0, 1.2, 1.5 }; // litros combustible por KM recorrido.
+    static double[] necesidadOxigeno = { 0.5, 1.0, 1.7 }; // litros de oxigeno por hora.
 
     // Definir constantes para códigos de color
     static final String GREEN = "\033[32m"; // Verde para barra de progreso
@@ -65,30 +71,34 @@ public class reto01 {
     }
 
     public static void showMenu() {
-        System.out.println(BRIGHT_BLUE + UNDERLINE + BOLD+"\n\t=== SIMULADOR DE VAIJES INTERPLANETARIO ===\n" + RESET);
-        System.out.println(BLUE+BOLD + "1)." + RESET + " Planetas destino");
-        System.out.println(BLUE+BOLD + "2)." + RESET + " Naves disponible");
-        System.out.println(BLUE+BOLD + "3)." + RESET + " Calcular recursos");
-        System.out.println(BLUE+BOLD + "4)." + RESET + " Iniciar Viaje");
-        System.out.println(BLUE+BOLD + "5)." + RESET + " Salir");
+        System.out
+                .println(BRIGHT_BLUE + UNDERLINE + BOLD + "\n\t=== SIMULADOR DE VAIJES INTERPLANETARIO ===\n" + RESET);
+        System.out.println(BLUE + BOLD + "1)." + RESET + " Planetas destino");
+        System.out.println(BLUE + BOLD + "2)." + RESET + " Naves disponible");
+        System.out.println(BLUE + BOLD + "3)." + RESET + " Calcular recursos");
+        System.out.println(BLUE + BOLD + "4)." + RESET + " Iniciar Viaje");
+        System.out.println(BLUE + BOLD + "5)." + RESET + " Salir");
         System.out.print(BOLD + "Selecciones una opción: " + RESET);
     }
 
     // Selección de planeta
-    public static void seleccionarPlaneta () {
-        System.out.println(BOLD+BRIGHT_BLUE+UNDERLINE+"\n\tMenú Planetas y sus distancias desde la Tierra "+RESET+"\n");
+    public static void seleccionarPlaneta() {
+        System.out.println(
+                BOLD + BRIGHT_BLUE + UNDERLINE + "\n\tMenú Planetas y sus distancias desde la Tierra " + RESET + "\n");
         for (int i = 0; i < planetasDestino.length; i++) {
-            System.out.println(BOLD+BRIGHT_BLUE+(i + 1) + "). " +RESET+ planetasDestino[i] +BLUE+BOLD+ " - Distancia: " + distancias[i] + " millones de km."+RESET);
+            System.out.println(BOLD + BRIGHT_BLUE + (i + 1) + "). " + RESET + planetasDestino[i] + BLUE + BOLD
+                    + " - Distancia: " + distancias[i] + " millones de km." + RESET);
         }
-        System.out.print(BOLD+"Elige el número de tu planeta destino: "+RESET);
+        System.out.print(BOLD + "Elige el número de tu planeta destino: " + RESET);
         var seleccion = sc.nextInt();
 
         if (seleccion >= 1 && seleccion <= planetasDestino.length) {
             selectedPlanetIndex = seleccion - 1;
-            System.out.println(BRIGHT_GREEN+"\nHas seleccionado " + planetasDestino[selectedPlanetIndex] + "."+RESET);
+            System.out
+                    .println(BRIGHT_GREEN + "\nHas seleccionado " + planetasDestino[selectedPlanetIndex] + "." + RESET);
             isPlanetSelected = true;
         } else {
-            System.err.println(ORANGE+"Selección no válida. Por favor, intenta de nuevo."+RESET);
+            System.err.println(ORANGE + "Selección no válida. Por favor, intenta de nuevo." + RESET);
         }
 
     }
@@ -100,41 +110,71 @@ public class reto01 {
         if (!isPlanetSelected) {
             System.err.println(ORANGE + "Primero debes seleccionar un planeta destino." + RESET);
             return;
-        }else{
-            do{
-            System.out.println("\n--- Seleccione una nave espacial de la lista ---");
-            for(int i = 0; i < tipoNave.length; i++){
-                System.out.printf("Nave (%d): %s%nVelocidad: %,.2f Km/h%n%n",i+1,tipoNave[i],velocidadNaves[i]);
-            }
-            System.out.print("Elige el número de nave que necesitas: ");
-            var seleccion = sc.nextInt();
-
-            if(seleccion > 0 && seleccion <=3){
-                selectedShipIndex = seleccion -1;
-                System.out.printf("\nHas seleccionado la nave: %s%nvelocidad: %,.2f Km/h%n%n", tipoNave[selectedShipIndex], velocidadNaves[selectedShipIndex]);
-                
-                System.out.print("Presiona (1) para confirmar (2) para seleccionar otra nave: ");
-                var confirmar = sc.nextInt();
-
-                switch(confirmar){
-                    case 1:
-                        salida = true;
-                        isShipSelected = true;
-                        break;
-                    case 2:
-                        continue;
-                    default:
-                        System.out.println("Digitaste una opción inválida");    
+        } else {
+            do {
+                System.out.println("\n--- Seleccione una nave espacial de la lista ---");
+                for (int i = 0; i < tipoNave.length; i++) {
+                    System.out.printf("Nave (%d): %s%nVelocidad: %,.2f Km/h%n%n", i + 1, tipoNave[i],
+                            velocidadNaves[i]);
                 }
-            }else{
-                System.out.println("Digitaste una opción inválida vuelve a intentar");
-            }
-            }while(!salida);
+                System.out.print("Elige el número de nave que necesitas: ");
+                var seleccion = sc.nextInt();
+
+                if (seleccion > 0 && seleccion <= 3) {
+                    selectedShipIndex = seleccion - 1;
+                    System.out.printf("\nHas seleccionado la nave: %s%nvelocidad: %,.2f Km/h%n%n",
+                            tipoNave[selectedShipIndex], velocidadNaves[selectedShipIndex]);
+
+                    System.out.print("Presiona (1) para confirmar (2) para seleccionar otra nave: ");
+                    var confirmar = sc.nextInt();
+
+                    switch (confirmar) {
+                        case 1:
+                            salida = true;
+                            isShipSelected = true;
+                            break;
+                        case 2:
+                            continue;
+                        default:
+                            System.out.println("Digitaste una opción inválida");
+                    }
+                } else {
+                    System.out.println("Digitaste una opción inválida vuelve a intentar");
+                }
+            } while (!salida);
         }
     }
 
     public static void calcularRecursos() {
+        boolean salir = false;
 
+        do{
+            if(!isShipSelected){
+                System.out.println("Aún no ha seleccionado una nave, debe hacerlo antes de calcular los recursos para el viaje");
+            }else{
+                System.out.printf("\nPlaneta de destino selecionado: (%s)%n",planetasDestino[selectedShipIndex]);
+                System.out.printf("Nave selecionada: (%s)",tipoNave[selectedShipIndex]);
+                System.out.printf("Distancia desde el planeta tierra: (%,.0f) millones de años",distancias[selectedShipIndex]);
+                System.out.printf("Velocidad de la nave: (%,.0f) millones de años",velocidadNaves[selectedShipIndex]);
+                System.out.printf("Velocidad de la nave: (%,.0f) millones de años",velocidadNaves[selectedShipIndex]);
+            }
+        }while(!salir);
+    }
+
+    // Calcular la cantidad de oxigeno requerido durante el viaje de acuerdo a la nave seleccionada
+    public static double calculoOxigeno(long[] distancias, double[] velocidadNaves, double necesidadOxigeno[], int selectedShipIndex){
+        long distancia = distancias[selectedShipIndex];
+        double velocidad = velocidadNaves[selectedShipIndex];
+        double oxigeno = necesidadOxigeno[selectedShipIndex];
+
+        return (distancia/velocidad) / oxigeno;
+    }
+
+    public static long calculoCombustible(long[] distancias, double necesidadCombustible[], int selectedShipIndex){
+        long distancia = distancias[selectedShipIndex];
+        double combustible = necesidadCombustible[selectedShipIndex];
+
+        return (long) (distancia*combustible);
     }
 
     public static void iniciarViaje() {
