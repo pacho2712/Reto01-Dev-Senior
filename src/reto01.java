@@ -155,7 +155,7 @@ public class reto01 {
             }else{
                 System.out.printf("\nPlaneta de destino selecionado: (%s)%n",planetasDestino[selectedPlanetIndex]);
                 System.out.printf("Nave selecionada: (%s)%n",tipoNave[selectedShipIndex]);
-                System.out.printf("Distancia desde el planeta tierra: (%,d) millones de años%n",distancias[selectedShipIndex]);                
+                System.out.printf("Distancia desde el planeta tierra: (%,d) millones de años%n",distancias[selectedPlanetIndex]);                
                 System.out.printf("Velocidad de la nave: (%,.0f) km/h%n",velocidadNaves[selectedShipIndex]);
                 System.out.print("Espere un momento estamos calculando los recursos");
                 
