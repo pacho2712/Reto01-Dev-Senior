@@ -75,9 +75,9 @@ public class reto01 {
         System.out
                 .println(BRIGHT_BLUE + UNDERLINE + BOLD + "\n\t=== SIMULADOR DE VAIJES INTERPLANETARIO ===\n" + RESET);
         System.out.println(BLUE + BOLD + "1)." + RESET + " Planetas destino");
-        System.out.println(BLUE + BOLD + "2)." + RESET + " Naves disponible");
-        System.out.println(BLUE + BOLD + "3)." + RESET + " Calcular recursos");
-        System.out.println(BLUE + BOLD + "4)." + RESET + " Iniciar Viaje");
+        System.out.println(BLUE + BOLD + "2)." + RESET + " Oferta Naves disponibles");
+        System.out.println(BLUE + BOLD + "3)." + RESET + " Calculo de recursos");
+        System.out.println(BLUE + BOLD + "4)." + RESET + " Inicio del Viaje");
         System.out.println(BLUE + BOLD + "5)." + RESET + " Salir");
         System.out.print(BOLD + "Selecciones una opción: " + RESET);
     }
@@ -194,6 +194,37 @@ public class reto01 {
 
     public static void iniciarViaje() {
 
+        if (!isPlanetSelected) {
+            System.err.println(ORANGE + "Primero debes seleccionar un planeta destino." + RESET);
+            return;
+        }
+        
+        if (!isShipSelected) {
+            System.err.println(ORANGE + "Primero debes seleccionar una de las naves espaciales." + RESET);
+            return;
+        }
+ System.out.println(BRIGHT_GREEN + "Iniciando el viaje con destino a " + planetasDestino[selectedPlanetIndex] + "..." + RESET);
+        
+        // Simular el progreso del viaje
+        for (int i = 0; i <= 100; i += 10) {
+            try {
+                Thread.sleep(500); // Pausa de medio segundo para recrear el progreso
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (i < 50) {
+
+                System.out.print(GREEN + "=" + RESET);
+            } else if (i < 80) {
+                System.out.print(YELLOW + "=" + RESET);
+            } else {
+                System.out.print(ORANGE + "=" + RESET);
+            }
+        }
+        System.out.println(BRIGHT_GREEN + "\n¡Has llegado a " + planetasDestino[selectedPlanetIndex] + RESET);
+    }
+    
+
     }
 
-}
+
