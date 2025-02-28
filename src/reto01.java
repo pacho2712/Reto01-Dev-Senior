@@ -122,7 +122,7 @@ public class reto01 {
                 var seleccion = sc.nextInt();
 
                 if (seleccion > 0 && seleccion <= 3) {
-                    selectedShipIndex = seleccion - 1;
+                    selectedShipIndex = seleccion -1;
                     System.out.printf("\nHas seleccionado la nave: %s%nvelocidad: %,.2f Km/h%n%n",
                             tipoNave[selectedShipIndex], velocidadNaves[selectedShipIndex]);
 
@@ -153,7 +153,7 @@ public class reto01 {
             if(!isShipSelected){
                 System.out.println("Aún no ha seleccionado una nave, debe hacerlo antes de calcular los recursos para el viaje");
             }else{
-                System.out.printf("\nPlaneta de destino selecionado: (%s)%n",planetasDestino[selectedShipIndex]);
+                System.out.printf("\nPlaneta de destino selecionado: (%s)%n",planetasDestino[selectedPlanetIndex]);
                 System.out.printf("Nave selecionada: (%s)%n",tipoNave[selectedShipIndex]);
                 System.out.printf("Distancia desde el planeta tierra: (%,d) millones de años%n",distancias[selectedShipIndex]);                
                 System.out.printf("Velocidad de la nave: (%,.0f) km/h%n",velocidadNaves[selectedShipIndex]);
