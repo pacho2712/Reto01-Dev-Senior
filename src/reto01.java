@@ -222,7 +222,7 @@ public class reto01 {
             }
         }
         System.out.println(BRIGHT_GREEN + "\n¡Has llegado a " + planetasDestino[selectedPlanetIndex] + RESET);
-        System.out.println("Otro merge");
+        
     }
     
 
