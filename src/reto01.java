@@ -37,6 +37,7 @@ public class reto01 {
     // Verificación de selección de nave y planeta
     static boolean isPlanetSelected = false; // Verifica si se ha seleccionado un planeta
     static boolean isShipSelected = false; // Verifica si se ha seleccionado una nave
+    static boolean isCalculatedResources = false; // Verifica si se calcularon los recursos
     static int selectedShipIndex = -1; // Indice de nave seleccionada
     static int selectedPlanetIndex = -1; // Indice de planeta seleccionado
 
@@ -74,9 +75,9 @@ public class reto01 {
         System.out
                 .println(BRIGHT_BLUE + UNDERLINE + BOLD + "\n\t=== SIMULADOR DE VAIJES INTERPLANETARIO ===\n" + RESET);
         System.out.println(BLUE + BOLD + "1)." + RESET + " Planetas destino");
-        System.out.println(BLUE + BOLD + "2)." + RESET + " Naves disponible");
-        System.out.println(BLUE + BOLD + "3)." + RESET + " Calcular recursos");
-        System.out.println(BLUE + BOLD + "4)." + RESET + " Iniciar Viaje");
+        System.out.println(BLUE + BOLD + "2)." + RESET + " Oferta Naves disponibles");
+        System.out.println(BLUE + BOLD + "3)." + RESET + " Calculo de recursos");
+        System.out.println(BLUE + BOLD + "4)." + RESET + " Inicio del Viaje");
         System.out.println(BLUE + BOLD + "5)." + RESET + " Salir");
         System.out.print(BOLD + "Selecciones una opción: " + RESET);
     }
@@ -121,7 +122,7 @@ public class reto01 {
                 var seleccion = sc.nextInt();
 
                 if (seleccion > 0 && seleccion <= 3) {
-                    selectedShipIndex = seleccion - 1;
+                    selectedShipIndex = seleccion -1;
                     System.out.printf("\nHas seleccionado la nave: %s%nvelocidad: %,.2f Km/h%n%n",
                             tipoNave[selectedShipIndex], velocidadNaves[selectedShipIndex]);
 
@@ -152,12 +153,24 @@ public class reto01 {
             if(!isShipSelected){
                 System.out.println("Aún no ha seleccionado una nave, debe hacerlo antes de calcular los recursos para el viaje");
             }else{
-                System.out.printf("\nPlaneta de destino selecionado: (%s)%n",planetasDestino[selectedShipIndex]);
-                System.out.printf("Nave selecionada: (%s)",tipoNave[selectedShipIndex]);
-                System.out.printf("Distancia desde el planeta tierra: (%,.0f) millones de años",distancias[selectedShipIndex]);                
-                System.out.printf("Velocidad de la nave: (%,.0f) millones de años",velocidadNaves[selectedShipIndex]);
+                System.out.printf("\nPlaneta de destino selecionado: (%s)%n",planetasDestino[selectedPlanetIndex]);
+                System.out.printf("Nave selecionada: (%s)%n",tipoNave[selectedShipIndex]);
+                System.out.printf("Distancia desde el planeta tierra: (%,d) millones de años%n",distancias[selectedPlanetIndex]);                
+                System.out.printf("Velocidad de la nave: (%,.0f) km/h%n",velocidadNaves[selectedShipIndex]);
+                System.out.print("Espere un momento estamos calculando los recursos");
                 
-                System.out.printf("Velocidad de la nave: (%,.0f) millones de años",velocidadNaves[selectedShipIndex]);
+                for(int i = 0; i<10; i++){
+                    System.out.print(".");
+                    try {
+                        Thread.sleep(500);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                System.out.printf("%nEl oxígeno requerido para el viaje es: (%,.0f) litros%n",calculoOxigeno(distancias, velocidadNaves, necesidadOxigeno, selectedShipIndex));
+                System.out.printf("El combustible requerido para el viaje es: (%,d) litros%n",calculoCombustible(distancias, necesidadCombustible, selectedShipIndex));
+                isCalculatedResources = true;
+                salir = true;
             }
         }while(!salir);
     }
@@ -181,6 +194,36 @@ public class reto01 {
 
     public static void iniciarViaje() {
 
-    }
+        if (!isPlanetSelected) {
+            System.err.println(ORANGE + "Primero debes seleccionar un planeta destino." + RESET);
+            return;
+        }
+        
+        if (!isShipSelected) {
+            System.err.println(ORANGE + "Primero debes seleccionar una de las naves espaciales." + RESET);
+            return;
+        }
+ System.out.println(BRIGHT_GREEN + "Iniciando el viaje con destino a " + planetasDestino[selectedPlanetIndex] + "..." + RESET);
+        
+        // Simular el progreso del viaje
+        for (int i = 0; i <= 100; i += 10) {
+            try {
+                Thread.sleep(500); // Pausa de medio segundo para recrear el progreso
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (i < 50) {
 
-}
+                System.out.print(GREEN + "=" + RESET);
+            } else if (i < 80) {
+                System.out.print(YELLOW + "=" + RESET);
+            } else {
+                System.out.print(ORANGE + "=" + RESET);
+            }
+        }
+        System.out.println(BRIGHT_GREEN + "\n¡Has llegado a " + planetasDestino[selectedPlanetIndex] + RESET);
+        
+    }
+    
+
+    }
