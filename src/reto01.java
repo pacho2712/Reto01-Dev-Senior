@@ -22,6 +22,11 @@ public class reto01 {
     static double[] velocidadNaves = { 10000.0, 12000.0, 15000.0 };// KM/Hora
     static double[] necesidadCombustible = { 1.0, 1.2, 1.5 }; // litros combustible por KM recorrido.
     static double[] necesidadOxigeno = { 0.5, 1.0, 1.7 }; // litros de oxigeno por hora.
+<<<<<<< HEAD
+=======
+    static double[] consumoOxigeno = new double[2]; // litros de oxigeno consumido y restante
+    static double[] consumoCombustible = new double[2]; // litros de oxigeno consumido y restante
+>>>>>>> 3660da6c46afb0058c749a50589767ce753e4c41
 
     // Definir constantes para códigos de color
     static final String GREEN = "\033[32m"; // Verde para barra de progreso
@@ -204,7 +209,11 @@ public class reto01 {
             return;
         }
  System.out.println(BRIGHT_GREEN + "Iniciando el viaje con destino a " + planetasDestino[selectedPlanetIndex] + "..." + RESET);
+<<<<<<< HEAD
         
+=======
+        int progresoViaje = 0;
+>>>>>>> 3660da6c46afb0058c749a50589767ce753e4c41
         // Simular el progreso del viaje
         for (int i = 0; i <= 100; i += 10) {
             try {
@@ -213,6 +222,7 @@ public class reto01 {
                 e.printStackTrace();
             }
             if (i < 50) {
+<<<<<<< HEAD
 
                 System.out.print(GREEN + "=" + RESET);
             } else if (i < 80) {
@@ -227,3 +237,58 @@ public class reto01 {
     
 
     }
+=======
+                for(int j = 0; j < progresoViaje; j++){
+                    System.out.print(GREEN + "=" + RESET);
+                }
+            } else if (i < 80) {
+                for(int j = 0; j < progresoViaje; j++){
+                    System.out.print(YELLOW + "=" + RESET);
+                }
+            } else {
+                for(int j = 0; j < progresoViaje; j++){
+                    System.out.print(ORANGE + "=" + RESET);
+                }
+            }
+            
+            if(i>=10){
+                progresoViaje = (int) (i*0.1);
+                consumoOxigeno(progresoViaje, consumoOxigeno);
+                System.out.printf(" Recorrido: %s%% - Consumo de oxigeno: %,.0f litros - Litros restantes: %,.0f%n",i,consumoOxigeno[0], consumoOxigeno[1]);
+            }
+        }
+        System.out.println(BRIGHT_GREEN + "\n¡Has llegado a " + planetasDestino[selectedPlanetIndex] + RESET);
+        
+    }
+
+    //Consumo de oxigeno durante el viaje
+    public static void consumoOxigeno(int progresoViaje, double[] consumoOxigeno){
+        var totalViaje = 10;
+        var oxigeno = calculoOxigeno(distancias, velocidadNaves, necesidadOxigeno, selectedShipIndex);
+        var divisionOxigeno = oxigeno/totalViaje;
+
+        double oxigenoConsumido = divisionOxigeno * progresoViaje;
+        double oxigenoRestante = oxigeno - oxigenoConsumido;
+
+        consumoOxigeno[0] = oxigenoConsumido;
+        consumoOxigeno[1] = oxigenoRestante;
+    }
+
+    //Consumo de combustible durante el viaje
+    public static void consumoCombustible(int progresoViaje, double[] consumoCombustible){
+        var totalViaje = 10;
+        var combustible = calculoCombustible(distancias, consumoCombustible, progresoViaje);
+        var divisionCombustible = combustible/totalViaje;
+
+        double combustibleConsumido = divisionCombustible * progresoViaje;
+        double combustibleRestante = combustible - combustibleConsumido;
+
+        consumoOxigeno[0] = combustibleConsumido;
+        consumoOxigeno[1] = combustibleRestante;
+    }
+    
+
+    }
+
+
+>>>>>>> 3660da6c46afb0058c749a50589767ce753e4c41
