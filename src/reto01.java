@@ -233,6 +233,10 @@ public class reto01 {
                 consumoOxigeno(progresoViaje, consumoOxigeno);
                 System.out.printf(" Recorrido: %s%% - Consumo de oxigeno: %,.0f litros - Litros restantes: %,.0f%n",i,consumoOxigeno[0], consumoOxigeno[1]);
             }
+
+            if (Math.random() < 0.2) {
+                simularSituacionesDePeligro();
+            }
         }
         System.out.println(BRIGHT_GREEN + "\n¡Has llegado a " + planetasDestino[selectedPlanetIndex] + RESET);
         
