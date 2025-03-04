@@ -35,11 +35,13 @@ Una vez ejecutado, sigue las instrucciones en pantalla para seleccionar tu desti
 
 ## Dónde obtener ayuda
 
-The workspace contains two folders by default, where:
+Ante cualquier anomalía detectada en la ejecución o funcionalidad del programa pueden remitirse al equipo de desarrolladores del software relacionados en el Item "...Quien contribuye..." de este README.md. 
 
 ## Quién contribuye
 
-The workspace contains two folders by default, where:
+El equipo que contribuyó al desarrollo del proyecto fue:
+    - Giovanni Mauricio Ceballos Betancurth
+    - Francisco Lopez Montoya
 
 ## Estado del proyecto
 
