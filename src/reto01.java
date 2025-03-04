@@ -74,8 +74,7 @@ public class reto01 {
     }
 
     public static void showMenu() {
-        System.out
-                .println(BRIGHT_BLUE + UNDERLINE + BOLD + "\n\t=== SIMULADOR DE VAIJES INTERPLANETARIO ===\n" + RESET);
+        System.out.println(BRIGHT_BLUE + UNDERLINE + BOLD + "\n\t=== SIMULADOR DE VAIJES INTERPLANETARIO ===\n" + RESET);
         System.out.println(BLUE + BOLD + "1)." + RESET + " Planetas destino");
         System.out.println(BLUE + BOLD + "2)." + RESET + " Oferta Naves disponibles");
         System.out.println(BLUE + BOLD + "3)." + RESET + " Calculo de recursos");
@@ -153,7 +152,8 @@ public class reto01 {
 
         do{
             if(!isShipSelected){
-                System.out.println("Aún no ha seleccionado una nave, debe hacerlo antes de calcular los recursos para el viaje");
+                System.err.println("Aún no ha seleccionado una nave, debe hacerlo antes de calcular los recursos para el viaje");
+                return;
             }else{
                 System.out.printf("\nPlaneta de destino selecionado: (%s)%n",planetasDestino[selectedPlanetIndex]);
                 System.out.printf("Nave selecionada: (%s)%n",tipoNave[selectedShipIndex]);
