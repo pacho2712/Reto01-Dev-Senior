@@ -102,7 +102,6 @@ public class reto01 {
         } else {
             System.err.println(ORANGE + "Selección no válida. Por favor, intenta de nuevo." + RESET);
         }
-
     }
 
     // Selección de nave espacial
