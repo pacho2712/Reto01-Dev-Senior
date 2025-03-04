@@ -74,8 +74,7 @@ public class reto01 {
     }
 
     public static void showMenu() {
-        System.out
-                .println(BRIGHT_BLUE + UNDERLINE + BOLD + "\n\t=== SIMULADOR DE VAIJES INTERPLANETARIO ===\n" + RESET);
+        System.out.println(BRIGHT_BLUE + UNDERLINE + BOLD + "\n\t=== SIMULADOR DE VAIJES INTERPLANETARIO ===\n" + RESET);
         System.out.println(BLUE + BOLD + "1)." + RESET + " Planetas destino");
         System.out.println(BLUE + BOLD + "2)." + RESET + " Oferta Naves disponibles");
         System.out.println(BLUE + BOLD + "3)." + RESET + " Calculo de recursos");
@@ -103,7 +102,6 @@ public class reto01 {
         } else {
             System.err.println(ORANGE + "Selección no válida. Por favor, intenta de nuevo." + RESET);
         }
-
     }
 
     // Selección de nave espacial
@@ -153,7 +151,8 @@ public class reto01 {
 
         do{
             if(!isShipSelected){
-                System.out.println("Aún no ha seleccionado una nave, debe hacerlo antes de calcular los recursos para el viaje");
+                System.err.println("Aún no ha seleccionado una nave, debe hacerlo antes de calcular los recursos para el viaje");
+                return;
             }else{
                 System.out.printf("\nPlaneta de destino selecionado: (%s)%n",planetasDestino[selectedPlanetIndex]);
                 System.out.printf("Nave selecionada: (%s)%n",tipoNave[selectedShipIndex]);
@@ -231,7 +230,12 @@ public class reto01 {
             if(i>=10){
                 progresoViaje = (int) (i*0.1);
                 consumoOxigeno(progresoViaje, consumoOxigeno);
-                System.out.printf(" Recorrido: %s%% - Consumo de oxigeno: %,.0f litros - Litros restantes: %,.0f%n",i,consumoOxigeno[0], consumoOxigeno[1]);
+                consumoCombustible(progresoViaje);
+                System.out.printf(" Recorrido: %s%%%nConsumo de oxigeno: %,.0f litros - Litros restantes: %,.0f%nConsumo de combustible: %,.0f litros - Litros restantes: %,.0f litros%n",i,consumoOxigeno[0], consumoOxigeno[1],consumoCombustible[0],consumoCombustible[1]);
+            }
+
+            if (Math.random() < 0.2) {
+                simularSituacionesDePeligro();
             }
         }
         System.out.println(BRIGHT_GREEN + "\n¡Has llegado a " + planetasDestino[selectedPlanetIndex] + RESET);
@@ -252,16 +256,60 @@ public class reto01 {
     }
 
     //Consumo de combustible durante el viaje
-    public static void consumoCombustible(int progresoViaje, double[] consumoCombustible){
+    public static void consumoCombustible(int progresoViaje){
         var totalViaje = 10;
-        var combustible = calculoCombustible(distancias, consumoCombustible, progresoViaje);
+        var combustible = calculoCombustible(distancias, necesidadCombustible, selectedShipIndex);
         var divisionCombustible = combustible/totalViaje;
 
         double combustibleConsumido = divisionCombustible * progresoViaje;
         double combustibleRestante = combustible - combustibleConsumido;
 
-        consumoOxigeno[0] = combustibleConsumido;
-        consumoOxigeno[1] = combustibleRestante;
+        consumoCombustible[0] = combustibleConsumido;
+        consumoCombustible[1] = combustibleRestante;
+    }
+
+    public static void simularSituacionesDePeligro() {
+        
+        if (!isPlanetSelected) {
+            System.err.println(ORANGE + "Selecciona un planeta de destino para continuar con el viaje." + RESET);
+            return;
+        }
+        
+        if (!isShipSelected) {
+            System.err.println(ORANGE + "selecciona una de las naves espaciales." + RESET);
+            return;
+        }
+        
+        if (!isCalculatedResources) {
+            System.err.println(ORANGE + "se debe hacer el calculo de recursos del viaje antes de continuar." + RESET);
+            return;
+        }
+        
+        System.out.println(BRIGHT_GREEN + "Simulando situaciones de peligro en el viaje interplanetario..." + RESET);
+        
+        // Simular las situaciones de peligro que se podrian presentar//
+
+        String[] situacionesPeligro = { "Basura espacial detectada: la nave fue golpeada afectacion leve.", "Se ha detectado una tormenta geomagnetica: debemos cambiar el rumbo para evitarla, realizando calculos","Se ha detectado un asteroide cerca: reduciendo velocidad para evitar colision." };  
+
+        int situacionesPeligroIndex = new Random().nextInt(situacionesPeligro.length);
+        System.out.println(ORANGE + situacionesPeligro[situacionesPeligroIndex] + RESET);
+
+        switch (situacionesPeligroIndex) {
+            case 0:
+                System.out.println(ORANGE + "Reinicie el sistema de comunicacion para conectar con la antena auxiliar." + RESET);
+                break;
+            case 1:
+                System.out.println(ORANGE + "recalculando el rumbo para evitar tormenta geomagnetica; enaproximadamente 3 horas se recobra la linea de desplazamiento." + RESET);
+                break;
+            case 2:
+                System.out.println(ORANGE + "Reduciendo la velocidad para evitar la colision, una vez superado el asteroide aumento de velocidad en 90% durante 6 horas luego velocidad al 70% proyectado." + RESET);
+                break;
+            default:
+                System.out.println(ORANGE + "evento no identificado, aeronave sin afectacion." + RESET);
+                break;
+        }
+        
+        System.out.println(BRIGHT_GREEN + "Viaje interplanetario finalizado con exito." + RESET);
     }
     
 
