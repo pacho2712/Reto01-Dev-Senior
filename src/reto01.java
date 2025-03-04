@@ -3,10 +3,8 @@ import java.util.Scanner;
 
 public class reto01 {
 
-    // Definir variables globales
+    // Definir variables globales que permitan la creación de métodos y su funcionalidad.
     static Scanner sc = new Scanner(System.in);
-    static Random r = new Random();
-
     static String[] planetasDestino = { "mercurio", "venus", "marte", "jupiter", "saturno", "urano", "neptuno" };
     static String[] descripcionPlanetas = {
             "el mas pequeño del sistema solar,cercano al sol, denso y rocoso, temperaturas entre -180°c y 430°c",
@@ -25,7 +23,7 @@ public class reto01 {
     static double[] consumoOxigeno = new double[2]; // litros de oxigeno consumido y restante
     static double[] consumoCombustible = new double[2]; // litros de oxigeno consumido y restante
 
-    // Definir constantes para códigos de color
+    // Definir constantes para códigos de color buscando dar formato en la ejecución del programa y aspectos variables según se vayan cumpliendo ciertas condiciones en la interacción del usuario.
     static final String GREEN = "\033[32m"; // Verde para barra de progreso
     static final String YELLOW = "\033[33m"; // Amarillo para barra de progreso
     static final String BLUE = "\033[34m"; // Azul para subtitulos
@@ -35,14 +33,18 @@ public class reto01 {
     static final String BRIGHT_BLUE = "\033[94m"; // Azul brillante Titulos
     static final String BRIGHT_GREEN = "\033[92m"; // Verde brillante Soluciones
     static final String UNDERLINE = "\033[4m"; // Subrayado en titulos
+    static final String LIGHT_GRAY = "\033[90m"; // Gris claro real (ANSI extendido)
 
-    // Verificación de selección de nave y planeta
+    // Verificación de selección de nave, planeta, calculo de recursos y cambios en la selección de los métodos seleccionarNaveEspacial() y seleccionarPlaneta()
     static boolean isPlanetSelected = false; // Verifica si se ha seleccionado un planeta
     static boolean isShipSelected = false; // Verifica si se ha seleccionado una nave
     static boolean isCalculatedResources = false; // Verifica si se calcularon los recursos
     static int selectedShipIndex = -1; // Indice de nave seleccionada
     static int selectedPlanetIndex = -1; // Indice de planeta seleccionado
+    static boolean planetSelectedChange = false; // Verifica si el planeta de destino cambió
+    static boolean shipSelectedChange = false; // Verifica si cambiaron la nave inicialmente seleccionada para el viaje
 
+    //Método principal main donde se realiza la ejecución del programa
     public static void main(String[] args) {
         int opcion;
 
@@ -73,18 +75,38 @@ public class reto01 {
         sc.close();
     }
 
+    //Método que muestra el menú principal del programa
     public static void showMenu() {
         System.out.println(BRIGHT_BLUE + UNDERLINE + BOLD + "\n\t=== SIMULADOR DE VAIJES INTERPLANETARIO ===\n" + RESET);
-        System.out.println(BLUE + BOLD + "1)." + RESET + " Planetas destino");
-        System.out.println(BLUE + BOLD + "2)." + RESET + " Oferta Naves disponibles");
-        System.out.println(BLUE + BOLD + "3)." + RESET + " Calculo de recursos");
-        System.out.println(BLUE + BOLD + "4)." + RESET + " Inicio del Viaje");
+        if(isPlanetSelected){
+            System.out.println(BLUE + BOLD + "1)." + RESET + UNDERLINE + " Planetas destino " + RESET);
+        }else{
+            System.out.println(BLUE + "1)." + RESET + LIGHT_GRAY + " Planetas destino");
+        }
+        if(isShipSelected){
+            System.out.println(BLUE + BOLD + "2)." + RESET + UNDERLINE + " Oferta Naves disponibles " + RESET);
+        }else{
+            System.out.println(BLUE + "2)." + RESET + LIGHT_GRAY + " Oferta Naves disponibles");
+        }
+        if(isCalculatedResources && !planetSelectedChange && !shipSelectedChange){
+            System.out.println(BLUE + BOLD + "3)." + RESET + UNDERLINE + " Calculo de recursos " + RESET);
+        }else{
+            System.out.println(BLUE + "3)." + RESET + LIGHT_GRAY + " Calculo de recursos");
+        }
+        if(isPlanetSelected && isShipSelected && isCalculatedResources && !planetSelectedChange && !shipSelectedChange){
+            System.out.println(BLUE + BOLD + "4)." + RESET + " Inicio del Viaje " + RESET);
+        }else{
+            System.out.println(BLUE + "4)." + RESET + LIGHT_GRAY + " Inicio del Viaje");
+        }
         System.out.println(BLUE + BOLD + "5)." + RESET + " Salir");
         System.out.print(BOLD + "Selecciones una opción: " + RESET);
     }
 
-    // Selección de planeta
+    // Selección de planeta: método que permite seleccionar un planeta de destino desde un array declarado en las variables globales.
     public static void seleccionarPlaneta() {
+        if(isPlanetSelected){
+            planetSelectedChange = true;
+        }
         System.out.println(
                 BOLD + BRIGHT_BLUE + UNDERLINE + "\n\tMenú Planetas y sus distancias desde la Tierra " + RESET + "\n");
         for (int i = 0; i < planetasDestino.length; i++) {
@@ -104,9 +126,13 @@ public class reto01 {
         }
     }
 
-    // Selección de nave espacial
+    // Selección de nave espacial: método que permite seleccionar una nave disponible desde un array declarado en las variables globales.
     public static void seleccionarNaveEspacial() {
         var salida = false;
+
+        if(isShipSelected){
+            shipSelectedChange = true;
+        }
 
         if (!isPlanetSelected) {
             System.err.println(ORANGE + "Primero debes seleccionar un planeta destino." + RESET);
@@ -146,6 +172,7 @@ public class reto01 {
         }
     }
 
+    //Metodo que implementa otros dos métodos para calcular los recursos necesario haciendo operaciones mátemáticas de acuerdo a la distancia y requerimientos de cómbustible y oxígeno.
     public static void calcularRecursos() {
         boolean salir = false;
 
@@ -171,12 +198,14 @@ public class reto01 {
                 System.out.printf("%nEl oxígeno requerido para el viaje es: (%,.0f) litros%n",calculoOxigeno(distancias, velocidadNaves, necesidadOxigeno, selectedShipIndex));
                 System.out.printf("El combustible requerido para el viaje es: (%,d) litros%n",calculoCombustible(distancias, necesidadCombustible, selectedShipIndex));
                 isCalculatedResources = true;
+                planetSelectedChange = false;
+                shipSelectedChange = false;
                 salir = true;
             }
         }while(!salir);
     }
 
-    // Calcular la cantidad de oxigeno requerido durante el viaje de acuerdo a la nave seleccionada
+    // Calcular la cantidad de oxigeno requerido durante el viaje de acuerdo a la nave seleccionada.
     public static double calculoOxigeno(long[] distancias, double[] velocidadNaves, double necesidadOxigeno[], int selectedShipIndex){
         long distancia = distancias[selectedShipIndex];
         double velocidad = velocidadNaves[selectedShipIndex];
@@ -185,7 +214,7 @@ public class reto01 {
         return (distancia/velocidad) / oxigeno;
     }
 
-    // Calcular la cantidad de combustible requerido
+    // Calcular la cantidad de combustible requerido de acuerdo a la distancia del planeta seleccionado.
     public static long calculoCombustible(long[] distancias, double necesidadCombustible[], int selectedShipIndex){
         long distancia = distancias[selectedShipIndex];
         double combustible = necesidadCombustible[selectedShipIndex];
@@ -193,7 +222,17 @@ public class reto01 {
         return (long) (distancia*combustible);
     }
 
+    //Permite el inicio del viaje una vez se ha cumplido la selección de nave, planeta y calculo de recursos, verifica si posterior al calculo de recursos se cambió el destino o la nave a utilizar para recalcular recursos, utilizando estructuras de control.
     public static void iniciarViaje() {
+        if(planetSelectedChange){
+            System.err.println("El planeta de destino fue cambiado se deben recalcular los recursos");
+            return;
+        }
+        
+        if(shipSelectedChange){
+            System.err.println("Detectamos un cambio de nave se deben recalcular los recursos para el viaje");
+            return;
+        }
 
         if (!isPlanetSelected) {
             System.err.println(ORANGE + "Primero debes seleccionar un planeta destino." + RESET);
@@ -202,6 +241,11 @@ public class reto01 {
         
         if (!isShipSelected) {
             System.err.println(ORANGE + "Primero debes seleccionar una de las naves espaciales." + RESET);
+            return;
+        }
+
+        if (!isCalculatedResources) {
+            System.err.println(ORANGE + "Primero debes calcular los recursos para el viaje." + RESET);
             return;
         }
  System.out.println(BRIGHT_GREEN + "Iniciando el viaje con destino a " + planetasDestino[selectedPlanetIndex] + "..." + RESET);
@@ -235,14 +279,14 @@ public class reto01 {
             }
 
             if (Math.random() < 0.2) {
-                simularSituacionesDePeligro();
+                simularSituacionesDePeligro();//Adopta el método para simular eventos inesperados.
             }
         }
         System.out.println(BRIGHT_GREEN + "\n¡Has llegado a " + planetasDestino[selectedPlanetIndex] + RESET);
         
     }
 
-    //Consumo de oxigeno durante el viaje
+    //Consumo de oxigeno durante el viaje: mediante una operación matemática arroja la cantidad de oxígeno requerida para el viaje, según la distancia.
     public static void consumoOxigeno(int progresoViaje, double[] consumoOxigeno){
         var totalViaje = 10;
         var oxigeno = calculoOxigeno(distancias, velocidadNaves, necesidadOxigeno, selectedShipIndex);
@@ -255,7 +299,7 @@ public class reto01 {
         consumoOxigeno[1] = oxigenoRestante;
     }
 
-    //Consumo de combustible durante el viaje
+    //Consumo de combustible durante el viaje: calcula mediante una operación matemática el combustible requerido de acuerdo a la distancia.
     public static void consumoCombustible(int progresoViaje){
         var totalViaje = 10;
         var combustible = calculoCombustible(distancias, necesidadCombustible, selectedShipIndex);
@@ -268,6 +312,7 @@ public class reto01 {
         consumoCombustible[1] = combustibleRestante;
     }
 
+    //Método simular situaciones de peligro: este método permite simular por medio de un Random algúnas situaciones de peligro aleatorias con una probabilidad del 20% de ocurrencia durante el viaje.
     public static void simularSituacionesDePeligro() {
         
         if (!isPlanetSelected) {
@@ -299,18 +344,14 @@ public class reto01 {
                 System.out.println(ORANGE + "Reinicie el sistema de comunicacion para conectar con la antena auxiliar." + RESET);
                 break;
             case 1:
-                System.out.println(ORANGE + "recalculando el rumbo para evitar tormenta geomagnetica; enaproximadamente 3 horas se recobra la linea de desplazamiento." + RESET);
+                System.out.println(ORANGE + "Recalculando el rumbo para evitar tormenta geomagnetica; enaproximadamente 3 horas se recobra la linea de desplazamiento." + RESET);
                 break;
             case 2:
                 System.out.println(ORANGE + "Reduciendo la velocidad para evitar la colision, una vez superado el asteroide aumento de velocidad en 90% durante 6 horas luego velocidad al 70% proyectado." + RESET);
                 break;
             default:
-                System.out.println(ORANGE + "evento no identificado, aeronave sin afectacion." + RESET);
+                System.out.println(ORANGE + "Evento no identificado, aeronave sin afectacion." + RESET);
                 break;
         }
-        
-        System.out.println(BRIGHT_GREEN + "Viaje interplanetario finalizado con exito." + RESET);
     }
-    
-
-    }
+}
