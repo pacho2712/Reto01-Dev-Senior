@@ -231,7 +231,8 @@ public class reto01 {
             if(i>=10){
                 progresoViaje = (int) (i*0.1);
                 consumoOxigeno(progresoViaje, consumoOxigeno);
-                System.out.printf(" Recorrido: %s%% - Consumo de oxigeno: %,.0f litros - Litros restantes: %,.0f%n",i,consumoOxigeno[0], consumoOxigeno[1]);
+                consumoCombustible(progresoViaje);
+                System.out.printf(" Recorrido: %s%%%nConsumo de oxigeno: %,.0f litros - Litros restantes: %,.0f%nConsumo de combustible: %,.0f litros - Litros restantes: %,.0f litros%n",i,consumoOxigeno[0], consumoOxigeno[1],consumoCombustible[0],consumoCombustible[1]);
             }
         }
         System.out.println(BRIGHT_GREEN + "\n¡Has llegado a " + planetasDestino[selectedPlanetIndex] + RESET);
@@ -252,16 +253,16 @@ public class reto01 {
     }
 
     //Consumo de combustible durante el viaje
-    public static void consumoCombustible(int progresoViaje, double[] consumoCombustible){
+    public static void consumoCombustible(int progresoViaje){
         var totalViaje = 10;
-        var combustible = calculoCombustible(distancias, consumoCombustible, progresoViaje);
+        var combustible = calculoCombustible(distancias, necesidadCombustible, selectedShipIndex);
         var divisionCombustible = combustible/totalViaje;
 
         double combustibleConsumido = divisionCombustible * progresoViaje;
         double combustibleRestante = combustible - combustibleConsumido;
 
-        consumoOxigeno[0] = combustibleConsumido;
-        consumoOxigeno[1] = combustibleRestante;
+        consumoCombustible[0] = combustibleConsumido;
+        consumoCombustible[1] = combustibleRestante;
     }
     
 
